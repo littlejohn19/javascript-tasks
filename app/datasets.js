@@ -1,180 +1,229 @@
 'use strict';
 
+
 module.exports = {
-    chunk: function ()
-    {
-        var array = [1, 2, 3, 4, 5, 6, 7, 8];
-        var size = 3;
-        return [array, size];
-    },
-    chunk2: function ()
-    {
-        var array = [1, 2, 3, 4, 5, 6, 7, 8];
-        var size = 2;
-        return [array, size];
-    },
-    compact: function ()
-    {
-        var array = [1, null, false, '', 0, 2, undefined, 3];
-        return [array];
-    },
-    difference1: function ()
-    {
-        var baseArray = [1, null, false, '', 0, 2, undefined, 3];
-        var exclusion1 = [1, '', 0];
-        var exclusion2 = [null, false, 2, undefined, 3];
-        return [baseArray, exclusion1, exclusion2];
-    },
-    difference2: function ()
-    {
-        var baseArray = [1, null, false, '', 0, 2, undefined, 3];
-        var exclusion1 = [1, '', 0];
-        return [baseArray, exclusion1];
-    },
-    drop1: function ()
-    {
-        var array = [1, 2, {}, new Array(5)];
-        return [array];
-    },
-    drop2: function ()
-    {
-        var array = [1, 2, {}, new Array(5)];
-        var numberOfElements = 2;
-        return [array, numberOfElements];
-    },
-    dropRight: function ()
-    {
-        var array = [1, 2, {}, new Array(5)];
-        var numberOfElements = 3;
-        return [array, numberOfElements];
-    },
-    fill1: function ()
-    {
-        var array = new Array(110);
-        return [array, '*', 3, 103];
-    },
-    fill2: function ()
-    {
-        var array = new Array(1000);
-        return [array, 'donkey'];
-    },
-    findIndex1: function (array)
-    {
-        function predicate(item)
-        {
-            return 'Jack' === item.getName();
+
+    assign: function(){
+
+        var obj = {
+            number: 5,
+            square: 25,
+            'ping': function() {
+                return 'Number: ' + this.number;
+            },
+            'pong': function(){
+                return 'Number: ' + this.square;
+            },
+        };
+
+        function Obj2() {
+            this.number = 6,
+            this.string = 'Trust me! I am a engineer!';
         }
 
-        return [array, predicate];
+        Obj2.prototype.square = 36;
+
+        return [obj, new Obj2()];
     },
-    findIndex2: function ()
-    {
-        var array = [1, {name: 'Jack', age: 33}, {name: 'Rick', age: 21}, 21, {name: 'Jack', age: 21}, 4, 5];
-        var predicate = {name: 'Jack', age: 21};
-        return [array, predicate];
-    },
-    first1: function ()
-    {
-        var array = [];
-        return [array];
-    },
-    first2: function ()
-    {
-        var array = [1];
-        return [array];
-    },
-    flaten1: function ()
-    {
-        var array = [[1, 2], [3, [4]]];
-        return [array, true];
-    },
-    flaten2: function ()
-    {
-        var array = [[1, 2], [[3], 4]];
-        return [array];
-    },
-    indexOf: function ()
-    {
-        var array = [0, 1, 'a', 3];
-        var value = 'a';
-        return [array, value];
-    },
-    initial: function ()
-    {
-        var array = ['John', 'Doe', 'The second'];
-        return [array];
-    },
-    intersection: function ()
-    {
-        var array1 = [2, 3, 1, 8, 8];
-        var array2 = [2, 1, 2, 3, 5];
-        var array3 = [3, 4, 2, 1, 6, 6, 7];
-        return [array1, array2, array3];
-    },
-    last1: function ()
-    {
-        var array = [9];
-        return [array];
-    },
-    last2: function ()
-    {
-        var string = 'abc9';
-        return [string];
-    },
-    pull: function ()
-    {
-        var array = [1, 2, 1, 2, 3, 4, 5, 6];
-        return [array, 1, 2];
-    },
-    pullAt: function ()
-    {
-        var array = [0, 1, 2, 3, 100, 5, 6, 7, 8, 200];
-        var indices = [4, 9];
-        return [array, indices];
-    },
-    remove: function ()
-    {
-        var array = [{online: 1}, {online: true}, {online: 'yes'}, 1];
-        var predicate = 'online';
-        return [array, predicate];
-    },
-    take: function ()
-    {
-        var array = [{online: 1}, 1, 2, '3', 4, 5, 6];
-        var count = 5;
-        return [array, count];
-    },
-    union: function ()
-    {
-        var array1 = [1, 2];
-        var array2 = [2, 3];
-        var array3 = [1, 3];
-        return [array1, array2, array3];
-    },
-    uniq1: function ()
-    {
-        var array = [{x: 1}, {x: 2}, 3, {x: 1}];
-        var iteratee = 'x';
-        return [array, iteratee];
-    },
-    uniq2: function ()
-    {
-        var array = [{x: 1, y: 1}, {x: 1, y: 2}, 3, 3];
-        var iteratee = function (value)
-        {
-            return value.x + ';' + value.y;
+
+    //alias _.extend
+    assignIn: function(){
+        var obj = {
+            number: 5,
+            'square': function(){
+                return 'Square: ' + Math.pow(Math, this.number);
+            },
+
         };
-        return [array, iteratee];
+
+        function Obj2() {
+            this.number = 4;
+            this.cube = 64;
+        }
+
+        Obj2.prototype.fourthPower = 256;
+
+        Obj2.prototype.square = function(){
+            return 'Square: ' + Math.pow(Math, this.number);
+        };
+
+        return [obj, new Obj2()];
     },
-    without: function ()
-    {
-        var array = [1, 2, 5, 1, 3, 4];
-        return [array, 5, 6];
+
+    //alias _.extendWith
+    assignInWith: function(){
+        return [];
     },
-    xor: function ()
-    {
-        var array1 = [1, 2, 3, 1, 4];
-        var array2 = [3, 4, 3];
-        return [array1, array2];
+
+    assignWith: function(){
+        return [];
+    },
+
+    findKey1: function(obj){
+
+        var filter = function (n){
+            return n.number > 20 ;
+        };
+
+        return [obj, filter];
+
+    },
+
+    findKey2: function(obj) {
+
+        var value = { number: 15 };
+
+        return [obj, value];
+    },
+
+    findKey3: function(obj) {
+
+        var arr = ['bool', false];
+
+        return [obj, arr];
+    },
+
+    findKey4: function(obj) {
+
+        var filterStr = 'cube';
+
+        return [obj, filterStr];
+    },
+
+    findLastKey1: function(obj){
+        var filter  = function(o){
+            return o.pizza === true && o.pasta === false;
+        };
+
+        return [obj, filter];
+    },
+
+    findLastKey2: function(obj){
+
+        var filterObj = {pizza: true, lasagne: true};
+
+        return [obj, filterObj];
+    },
+
+    findLastKey3: function(obj){
+
+        var filterArr = ['number', 17];
+
+        return [obj, filterArr];
+    },
+
+    findLastKey4: function(obj){
+
+        var filterStr = 'pasta';
+
+        return [obj, filterStr];
+    },
+
+    get1: function(obj){
+
+        var filterStr = 'exercises.tasks[2].thirdTask';
+
+        return [obj, filterStr];
+    },
+
+    get2: function(obj) {
+
+        var filterArray = ['exercises', 'tasks', '2', 'thirdTask'];
+
+        return [obj, filterArray];
+    },
+
+    get3: function(obj){
+
+        var filterStr = 'month.January.Monday',
+            defaultValue = 'default value';
+
+        return [obj, filterStr, defaultValue];
+    },
+
+    invert: function(obj1){
+
+        return [obj1];
+    },
+
+    invertBy1: function(obj1){
+
+        return [obj1];
+    },
+
+    invoke: function(obj1){
+
+        return [obj1];
+    },
+
+    keys: function(){
+
+        function Classroom() {
+            this.teacher = 'Mr. Tom';
+            this.students = 27;
+            this.girs = 15;
+            this.boys = 12;
+        }
+
+        Classroom.prototype.animals = 1; //properties
+
+        return [new Classroom()];
+    },
+
+    keysIn: function(){
+
+        function Animal() {
+            this.arms = 4;
+            this.legs = 8;
+            this.heads = 2;
+        }
+
+        Animal.prototype.limbs = function(){
+            return this.arms + this.legs;
+        };
+
+        Animal.prototype.tails = 1;
+
+        return [new Animal()];
+    },
+
+    mapKeys1: function(obj){
+
+        var filter  = function(value, key){
+            return key + ' - number: ' + value;
+        };
+
+        return [obj, filter];
+    },
+
+    mapValues: function(){
+
+        return [];
+    },
+
+    merge: function(){
+
+        var owners = {
+            'data': [{ 'owner': 'Adam' }, { 'owner': 'Tom' }, { 'owner': 'John'}]
+        };
+        var animals = {
+            'data': [{ 'cats': 3 }, { 'dogs': 5 }, { 'ostrich': 1 }]
+
+        };
+
+        return [owners, animals];
+    },
+
+    omit1: function(obj){
+
+        var str = '';
+
+        return [obj, str];
+    },
+
+    omit2: function(obj){
+        var arr = ['number5', 'number44'];
+
+        return [obj, arr];
     }
 };
