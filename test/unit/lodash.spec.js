@@ -12,130 +12,118 @@ describe('Lodash training', function ()
     describe('Math functions', function () {
         describe('add', function () {
 
-            var params, capacity, area;
+            var params, augend, addend;
 
-            beforeEach(function () {
+            before(function () {
                 params = datasets.add();
-                capacity = params[0];
-                area = params[1];
+                augend = params[0];
+                addend = params[1];
             });
 
             it('should verify params', function () {
-                expect(capacity instanceof Function && area instanceof Function).to.eql(true);
                 expect(params).to.have.length(2);
+                expect(typeof augend).to.eql('number');
+                expect(typeof addend).to.eql('number');
+                expect(addend < 0).to.eql(true);
             });
-
-            it('should return capacity of cube', function () {
-                expect(capacity(2)).to.eql(8);
-                expect(capacity(3.3)).to.eql(35.937);
+            
+            it('should return total', function () {
+                expect(_.add.apply(_, datasets.add(params))).to.eql(-2);
             });
-
-            it('should return area of cube', function () {
-                expect(area(2)).to.eql(24);
-                expect(area(3.4)).to.eql(69.36);
-            });
-
-            it('should return add two function', function () {
-                expect(_.add.apply(_, ([capacity(5), area(3)]))).to.eql(179);
-                expect(_.add.apply(_, ([capacity(0.23), area(2)]))).to.eql(24.012167);
-            });
-
         });
 
-        describe('ceil', function () {
+        describe.only('ceil', function () {
 
-            var params, area;
+            var params, number, precision;
 
-            beforeEach(function () {
+            before(function () {
                 params = datasets.ceil();
-                area = params[0];
+                number = params[0];
+                precision = params[1];
             });
 
             it('should verify params', function () {
-                expect(area instanceof Function).to.eql(true);
                 expect(params).to.have.length(2);
+                expect(typeof number).to.eql('number');
+                expect(typeof precision).to.eql('number');
+
+                expect(Number.isInteger(number)).to.not.eql(true);
+                expect(precision).to.not.eql(0);
             });
 
-            it('should return area of rectangle when area side is smaller than 0 return 0', function () {
-                expect(area(3.2,4.6)).to.eql(15.6);
-                expect(area(-2, 4)).to.eql(0);
-                expect(area(0, 0)).to.eql(0);
-                expect(area(-2, 4)).to.eql(0);
-            });
-
-            it('should return round up area of rectangle', function () {
-                expect(_.ceil.apply(_,([area(3.2, 4.4)]))).to.eql(16);
-                expect(_.ceil.apply(_,([area(2.33, 0.55)]))).to.eql(6);
-                expect(_.ceil.apply(_,([area(1.74, 0.54), 4]))).to.eql(4.5601);
-                expect(_.ceil.apply(_,([area(-2, 0.54), 4]))).to.eql(0);
+            it('should return round up number', function () {
+                expect(_.ceil.apply(_, datasets.ceil(params))).to.eql(1.85);
             });
         });
 
         describe('divide', function () {
 
-            var params;
+            var params, dividend, divisor;
 
-            beforeEach(function () {
+            before(function () {
                 params = datasets.divide();
+                dividend = params[0];
+                divisor = params[1];
             });
 
             it('should verify params', function () {
-                _(params[0]).forEach(function (value) {
-                    expect(typeof value).to.eql('number');
-                });
+                expect(typeof dividend).to.eql('number');
+                expect(typeof divisor).to.eql('number');
+                expect(dividend).to.not.eql(Infinity);
 
                 expect(params).to.have.length(2);
             });
 
-            it('should divide two numbers a and b', function () {
-                expect(_.divide.apply(_, params)).to.eql(Infinity);
+            it('should divide two numbers', function () {
+                expect(_.divide.apply(_, datasets.divide(params))).to.eql(Infinity);
             });
 
         });
 
         describe('floor', function () {
 
-            var params;
-            var capacity;
+            var params, number, precision;
 
-            beforeEach(function () {
+            before(function () {
                 params = datasets.floor();
-                capacity = params[0];
+                number = params[0];
+                precision = params[1];
             });
 
             it('should verify params', function () {
-                expect(capacity instanceof Function).to.eql(true);
-            });
+                expect(params).to.have.length(2);
+                expect(typeof number).to.eql('number');
+                expect(typeof precision).to.eql('number');
 
-            it('should return capacity of cuboid', function () {
-                expect(capacity(2, 2, 2)).to.eql(8);
-                expect(capacity(2.3, 2.25, 5.43)).to.eql(28.10025);
-                expect(capacity(-1, 2.25, 5.43)).to.eql(0);
-                expect(capacity(3, -2, 5.43)).to.eql(0);
-                expect(capacity(3, 2, -3)).to.eql(0);
+                expect(Number.isInteger(number)).to.not.eql(true);
             });
 
             it('should return number round down', function () {
-                expect(_.floor.apply(_, [capacity(2,2,2)])).to.eql(8);
-                expect(_.floor.apply(_, [capacity(2.2,3.3,4.4), 2])).to.eql(31.94);
+                expect(_.floor.apply(_, datasets.floor(params))).to.eql(5.47);
             });
         });
 
         describe('max', function () {
 
-            var params;
+            var params, array;
 
-            beforeEach(function () {
+            before(function () {
                 params = datasets.max();
+                array = params[0];
             });
 
-            it('should find max value (5) in user array', function () {
+            it('should verify params', function () {
                 expect(params).to.have.length(1);
+                expect(array instanceof Array).to.eql(true);
 
-                for(var i=0; i<params[0].length; i++){
-                    expect(typeof params[0][i]).to.eql('number');
-                }
+                _(array).forEach(function (value) {
+                    expect(typeof value).to.eql('number');
+                });
 
+                expect(array).to.have.length(5);
+            });
+
+            it('should find and return max value in user array', function () {
                 expect(_.max.apply(_, datasets.max(params))).to.eql(5);
             });
         });
@@ -143,287 +131,288 @@ describe('Lodash training', function ()
 
         describe('maxBy', function () {
 
-            describe('maxBy - array', function () {
+            // I don't see any meaningful use maxBy as second param for array and object
 
-                var params, arr1, arr2;
+            describe('maxBy1', function () {
 
-                beforeEach(function () {
+                var params, obj, fun;
+
+                before(function () {
                     params = datasets.maxBy1();
-                    arr1 = [6, 5, 4, 8, 3];
-                    arr2 = [-4, -2, -6, 0];
-                });
-                
-                it('should verify params', function () {
-                    expect(params).to.have.length(1);
-                    expect(arr1 instanceof Array && arr2 instanceof Array).to.eql(true);
-                });
-
-                it('should return maxBy for array', function () {
-                    expect(_.maxBy.apply(_, datasets.maxBy1(arr1))).to.eql(8);
-                    expect(_.maxBy.apply(_, datasets.maxBy1(arr2))).to.eql(0);
-                });
-            });
-
-            /*
-            describe('maxBy - function', function () {
-                it('should use maxBy for function', function () {
-
-                });
-            });
-            //I have no idea how to do it. Probably maxBy doesn't support function. Help!
-            */
-
-            describe('maxBy - object', function () {
-
-                var params;
-
-                beforeEach(function () {
-                    params = datasets.maxBy3();
+                    obj = params[0];
+                    fun = params[1];
                 });
 
                 it('should verify params', function () {
                     expect(params).to.have.length(2);
-                    expect(params[0] instanceof Object).to.eql(true);
-                    expect(typeof params[1]).to.eql('string');
+                    expect(obj instanceof Array).to.eql(true);
+                    expect(fun instanceof Function).to.eql(true);
+
+                    _(obj).forEach(function (value) {
+                        expect(typeof value).to.eql('object');
+                    });
+
+                    expect(obj).to.have.length(3);
                 });
 
-                it('should use maxBy object', function () {
-                    expect(_.maxBy.apply(_, params)).to.eql({ Name: 'Edwin', Gold: 2500 });
+                it('should return max object from array using function', function () {
+                    expect(_.maxBy.apply(_,datasets.maxBy1(params))).to.eql({ a: 3, b: 3 });
                 });
             });
 
-            describe('maxBy - string', function () {
 
-                var params;
+            describe('maxBy2', function () {
 
-                beforeEach(function () {
-                    params = datasets.maxBy4();
+                var params, array, str;
+
+                before(function () {
+                    params = datasets.maxBy2();
+                    array = params[0];
+                    str = params[1];
                 });
 
                 it('should verify params', function () {
-                    expect(params).to.have.length(1);
+                    expect(params).to.have.length(2);
+                    expect(array instanceof Array).to.eql(true);
+                    expect(typeof str).to.eql('string');
+
+                    _(array).forEach(function (value) {
+                        expect(typeof value).to.eql('object');
+                    });
+
+                    expect(array).to.have.length(3);
                 });
-                
-                it('should find max value in string', function () {
-                    expect(_.maxBy.apply(_, params)).to.eql('word');
+
+                it('should return max object from array using string', function () {
+                    expect(_.maxBy.apply(_, datasets.maxBy2(params))).to.eql({ Name: 'Edwin', Gold: 2500 });
                 });
             });
         });
 
-
         describe('mean', function () {
 
-            var params;
+            var params, array;
 
-            beforeEach(function () {
+            before(function () {
                 params = datasets.mean();
+                array = params[0];
             });
-
-            it('should find mean value (3.25) in user array', function () {
+            
+            it('should verify params', function () {
                 expect(params).to.have.length(1);
-                _(params[0]).forEach(function (value) {
+                expect(array instanceof Array).to.eql(true);
+
+                _(array).forEach(function (value) {
                     expect(typeof value).to.eql('number');
                 });
+
+                expect(array).to.have.length(4);
+            });
+
+            it('should find mean value in array', function () {
                 expect(_.mean.apply(_, params)).to.eql(3.25);
             });
         });
 
         describe('meanBy', function () {
-            describe('meanBy - Array', function () {
+            // I don't see any meaningful use meanBy as second param for array and object
+            describe('meanBy1', function () {
 
-                var params;
+                var params, array, fun;
 
-                beforeEach(function () {
-                    params = datasets.meanBy1();
+                before(function () {
+                    params  = datasets.meanBy1();
+                    array = params[0];
+                    fun = params[1];
                 });
-
+                
                 it('should verify params', function () {
-                    expect(params).to.have.length(1);
-                    expect(params[0] instanceof Array).to.eql(true);
-                });
+                    expect(params).to.have.length(2);
+                    expect(array instanceof Array).to.eql(true);
+                    expect(fun instanceof Function).to.eql(true);
 
-                it('should find mean value in array', function () {
-                    expect(_.meanBy.apply(_, params)).to.eql(3.25);
+                    _(array).forEach(function (value) {
+                       expect(typeof value).to.eql('object');
+                    });
+
+                    expect(array).to.have.length(3);
+                });
+                
+                it('should return mean object from array using function', function () {
+                    expect(_.minBy.apply(_,datasets.meanBy1(params))).to.eql({ 'name': 'Mark' ,'age': 23 });
                 });
             });
 
-            /*
-            describe('meanBy - Function', function () {
-                it('should find mean value in function', function () {
+            describe('meanBy2', function () {
 
-                });
-            });
-            //I have no idea how to do it. Probably meanBy doesn't support function. Help!
-            */
+                var params, array, str;
 
-            describe('meanBy - Object', function () {
-
-                var params;
-
-                beforeEach(function () {
-                    params = datasets.meanBy3();
+                before(function () {
+                    params = datasets.meanBy2();
+                    array = params[0];
+                    str = params[1];
                 });
 
                 it('should verify params', function () {
                     expect(params).to.have.length(2);
-                    expect(params[0] instanceof Object).to.eql(true);
-                    expect(typeof params[1]).to.eql('string');
+                    expect(array instanceof Array).to.eql(true);
+                    expect(typeof str).to.eql('string');
+
+                    _(array).forEach(function (value) {
+                        expect(typeof value).to.eql('object');
+                    });
+
+                    expect(array).to.have.length(4);
                 });
 
-                it('should find mean value in object', function () {
-                    expect(_.meanBy.apply(_, params)).to.eql(5);
+                it('should return mean object from array using string', function () {
+                    expect(_.meanBy.apply(_, datasets.meanBy2(params))).to.eql(3);
                 });
             });
-
-            /*
-            describe('meanBy - String', function () {
-                it('should find mean value in string', function () {
-
-                });
-            });
-
-            //I have no idea how to do it. Probably meanBy doesn't support string. Help!
-            */
         });
 
         describe('min', function () {
 
-            var params;
+            var params, array;
 
-            beforeEach(function () {
+            before(function () {
                 params = datasets.min();
+                array = params[0];
             });
-
-            it('should find min value (-3) in user array', function () {
+            
+            it('should verify params', function () {
                 expect(params).to.have.length(1);
-                _(params[0]).forEach(function (value) {
+                expect(array instanceof Array).to.eql(true);
+                _(array).forEach(function (value) {
                     expect(typeof value).to.eql('number');
                 });
-                expect(_.min.apply(_, params)).to.eql(-3);
+
+                expect(array).to.have.length(6);
+            });
+
+            it('should find min value in array', function () {
+                expect(_.min.apply(_, datasets.min(params))).to.eql(-3);
             });
         });
 
-
         describe('minBy', function () {
-            
-            describe('minBy - Array', function () {
+            // I don't see any meaningful use maxBy as second param for array and object
+            describe('minBy1', function () {
 
-                var params;
+                var params, array, fun;
 
-                beforeEach(function () {
+                before(function () {
                     params = datasets.minBy1();
+                    array = params[0];
+                    fun = params[1];
                 });
 
-                it('should verify params', function () {
-                    expect(params).to.have.length(1);
-                    expect(params[0] instanceof Array).to.eql(true);
-                });
-
-                it('should return min value in Array', function () {
-                    expect(_.min.apply(_, params)).to.eql(-1);
-                });
-            });
-
-            /*
-            describe('minBy - Function', function () {
-                it('Function', function () {
-                });
-            });
-            //I have no idea how to do it. Probably minBy doesn't support function. Help!
-            */
-
-            describe('minBy - Object', function () {
-
-                var params;
-
-                beforeEach(function () {
-                    params = datasets.minBy3();
-                });
-                
                 it('should verify params', function () {
                     expect(params).to.have.length(2);
-                    expect(params[0] instanceof Object).to.eql(true);
-                    expect(typeof params[1]).to.eql('string');
+                    expect(array instanceof Array).to.eql(true);
+                    expect(fun instanceof Function).to.eql(true);
+
+                    _(array).forEach(function (value) {
+                        expect(typeof value).to.eql('object');
+                    });
+
+                    expect(array).to.have.length(3);
                 });
 
-                it('should return min value from Object', function () {
-                    expect(_.min.apply(_, params)).to.eql({ Name: 'Jack', Gold: 1500 });
+                it('should return min object from array using function', function () {
+                    expect(_.minBy.apply(_, datasets.minBy1(params))).to.eql({ name: 'Justin', age: 21 });
                 });
             });
 
-            describe('minBy - String', function () {
 
-                var params;
+            describe('minBy2', function () {
+                var params, array, str;
 
-                beforeEach(function () {
-                    params = datasets.minBy4();
+                before(function () {
+                    params = datasets.minBy2();
+                    array = params[0];
+                    str = params[1];
                 });
-                
+
                 it('should verify params', function () {
-                    expect(params).to.have.length(1);
-                    expect(typeof params[0]).to.eql('string');
+                    expect(params).to.have.length(2);
+                    expect(array instanceof Array).to.eql(true);
+                    expect(typeof str).to.eql('string');
+
+                    _(array).forEach(function (value) {
+                        expect(typeof value).to.eql('object');
+                    });
+
+                    expect(array).to.have.length(3);
                 });
-                
-                it('should return min value from string', function () {
-                    expect(_.min.apply(_, params)).to.eql('e');
+
+                it('should return min object from array using string', function () {
+                    expect(_.minBy.apply(_, datasets.minBy2(params))).to.eql({ Name: 'Bob', Gold: 200 });
                 });
             });
         });
 
         describe('multiply', function () {
 
-            var val1;
-            var val2;
-            var result1;
-            var params = datasets.multiply();
+            var params, multiplier, multiplicand;
 
-            beforeEach(function () {
-                val1 = Math.round(Math.random() * 10);
-                val2 = Math.round(Math.random() * 10);
-                result1  = val1 * val2;
+            before(function () {
+                params = datasets.multiply();
+                multiplier = params[0];
+                multiplicand = params[1];
+            });
+            
+            it('should verif params', function () {
+                expect(params).to.have.length(2);
+                expect(typeof multiplier).to.eql('number');
+                expect(typeof multiplicand).to.eql('number');
+                expect(multiplier < 0).to.eql(true);
+                expect(multiplicand < 0).to.eql(true);
             });
 
-            it('should multiply two random number', function () {
+            it('should multiply two number', function () {
                 expect(params).to.have.length(2);
-                expect(_.multiply.apply(_, datasets.multiply(val1, val2))).to.eql(result1);
+                expect(_.multiply.apply(_, datasets.multiply(params))).to.eql(15);
             });
         });
 
         describe('round', function () {
 
-            var params;
-            var sqrt;
+            var params, number, precision;
 
-            beforeEach(function () {
+            before(function () {
                 params = datasets.round();
-                sqrt = params[0];
+                number = params[0];
+                precision = params[1];
             });
 
-            it('should verify', function () {
-                expect(sqrt instanceof Function).to.eql(true);
+            it('should verify params', function () {
                 expect(params).to.have.length(2);
-            });
+                expect(typeof number).to.eql('number');
+                expect(typeof precision).to.eql('number');
 
-            it('should return sqrt number', function () {
-                expect(sqrt(4)).to.eql(2);
-                expect(sqrt(-1)).to.eql(NaN);
-                expect(sqrt(4.2)).to.eql(2.04939015319192);
-                expect(sqrt('asdf')).to.eql(NaN);
+                expect(Number.isInteger(number)).to.not.eql(true);
             });
 
             it('should return sqrt round number to precision', function () {
-                expect(_.round.apply(_, [sqrt(4.2), 3])).to.eql(2.049);
-                expect(_.round.apply(_, [sqrt(10), 4])).to.eql(3.1623);
-                expect(_.round.apply(_, [sqrt(-10), 3])).to.eql(NaN);
+                expect(_.round.apply(_, datasets.round(params))).to.eql(8.246);
             });
         });
 
         describe('subtract', function () {
 
-            var params;
+            var params, minuend, subtrahend;
 
-            beforeEach(function () {
+            before(function () {
                 params = datasets.subtract();
+                minuend = params[0];
+                subtrahend = params[1];
+            });
+            
+            it('should verify params', function () {
+                expect(params).to.have.length(2);
+                expect(typeof minuend).to.eql('number');
+                expect(typeof subtrahend).to.eql('number');
             });
 
             it('should return subtract two numbers', function () {
@@ -432,88 +421,85 @@ describe('Lodash training', function ()
                 expect(_.divide.apply(_, params)).to.eql(Infinity);
                 expect(_.multiply.apply(_, params)).to.eql(0);
                 expect(_.add.apply(_, params)).to.eql(15);
-            });
+            }); // @blabno said that it is okay
         });
 
         describe('sum', function () {
 
-            var params;
+            var params, array;
 
-            beforeEach(function () {
+            before(function () {
                 params = datasets.sum();
+                array = params[0];
+            });
+
+            it('should verify params', function () {
+                expect(params).to.have.length(1);
+                expect(array instanceof Array).to.eql(true);
+
+                _(array).forEach(function (value) {
+                    expect(typeof value).to.eql('number');
+                });
+
+                expect(array).to.have.length(4);
             });
 
             it('should return sum of array element', function () {
-                expect(params).to.have.length(1);
-                _(params[0]).forEach(function (value) {
-                    expect(typeof value).to.eql('number');
-                });
-                expect(_.sum.apply(_, params)).to.eql(10);
+                expect(_.sum.apply(_, datasets.sum(params))).to.eql(10);
             });
         });
 
         describe('sumBy', function () {
+            // I don't see any meaningful use sumBy as second param for array and object
+            describe('sumBy1', function () {
 
-            describe('sumBy - Array', function () {
+                var params, array, fun;
 
-                var params;
-
-                beforeEach(function () {
+                before(function () {
                     params = datasets.sumBy1();
-                });
-                
-                it('should verify params', function () {
-                    expect(params).to.have.length(1);
-                    expect(params[0] instanceof Array).to.eql(true);
-                });
-
-                it('should return sumBy of array element', function () {
-                    expect(_.sumBy.apply(_, params)).to.eql(10);
-                });
-            });
-
-            /*
-            describe('sumBy - Function', function () {
-                it('should return sumBy of function element', function () {
-
-                });
-            });
-            //I have no idea how to do it. Probably sumBy doesn't support function. Help!
-            */
-
-            describe('sumBy - Object', function () {
-                
-                var params;
-                
-                beforeEach(function () {
-                    params = datasets.sumBy3();
+                    array = params[0];
+                    fun = params[1];
                 });
                 
                 it('should verify params', function () {
                     expect(params).to.have.length(2);
-                    expect(params[0] instanceof Object).to.eql(true);
-                    expect(typeof params[1]).to.eql('string');
+                    expect(array instanceof Array).to.eql(true);
+                    expect(fun instanceof Function).to.eql(true);
+
+                    _(array).forEach(function (value) {
+                        expect(typeof value).to.eql('object');
+                    });
+                    expect(array).to.have.length(3);
                 });
-                
-                it('should return sumBy of object element', function () {
-                    expect(_.sumBy.apply(_, params)).to.eql(193);
+
+                it('should return sumBy of array element', function () {
+                    expect(_.sumBy.apply(_, datasets.sumBy1(params))).to.eql(3340.5);
                 });
             });
 
-            describe('sumBy - String', function () {
-
-                var params;
-
-                beforeEach(function () {
-                    params = datasets.sumBy4();
+            describe('sumBy2', function () {
+                
+                var params, array, str;
+                
+                before(function () {
+                    params = datasets.sumBy2();
+                    array = params[0];
+                    str = params[1];
                 });
-
+                
                 it('should verify params', function () {
-                    expect(params).to.have.length(1);
-                });
+                    expect(params).to.have.length(2);
+                    expect(array instanceof Array).to.eql(true);
+                    expect(typeof str).to.eql('string');
 
-                it('should return sumBy of string element', function () {
-                    expect(_.sumBy.apply(_, params)).to.eql('Thisisasimplestringtext');
+                    _(array).forEach(function (value) {
+                        expect(typeof value).to.eql('object');
+                    });
+                    expect(array).to.have.length(4);
+                });
+                
+                it('should return sumBy of object element', function () {
+                    expect(_.sumBy.apply(_, datasets.sumBy2(params))).to.eql(193);
                 });
             });
         });

@@ -3,84 +3,42 @@
 module.exports = {
 
     add: function () {
-
-        var capacity = function(x) {
-            if(x < 0){
-                return 0;
-            }else{
-                return x*x*x;
-            }
-
-        };
-
-        var area = function (x) {
-            if(x < 0){
-                return 0;
-            }else{
-                return 6*x*x;
-            }
-        };
-
-        return [capacity, area];
+        return [3, -5];
     },
 
-    ceil: function (x, y, precision) {
-
-        var area = function (x,y) {
-            if(x <= 0 || y <= 0){
-                return 0;
-            }
-            return (2*x+2*y);
-        };
-
-        return [area, precision];
+    ceil: function () {
+        return [1.8476,2];
     },
 
     divide: function () {
         return [3, 0];
     },
 
-    floor: function (callback, precision) {
-
-        var capacity = function (x, y, z) {
-            if(typeof x !== 'number' && typeof y !== 'number' && typeof z !== 'number' && x <= 0 && y <= 0 && z <= 0){
-                return 0;
-            }else if(x < 0 || y < 0 || z < 0){
-                return 0;
-            }else{
-                return x*y*z;
-            }
-        };
-
-        return [capacity, precision];
+    floor: function () {
+        return [5.47886, 2];
     },
 
     max: function () {
+        var array = [4,2,5,-1,0];
 
-        var tab = [4,2,5,-1];
-
-        return [tab];
-    },
-
-    maxBy1: function (array) {
         return [array];
     },
-    /*
-    maxBy2: function (array) {
-        return [array];
-    },
-    */
-    maxBy3: function () {
 
+    maxBy1: function () {
+
+        var obj = [{a: 3, b: 3}, {a:1, b:4}, {a: 0, b: -3}];
+
+        var fun = function (o) {
+            return o.a + o.b;
+        };
+
+        return [obj, fun];
+    },
+
+    maxBy2: function () {
         var objects = [{ 'Name': 'Jack', 'Gold': 1500 }, { 'Name': 'Edwin', 'Gold': 2500 }, { 'Name': 'Bob', 'Gold': 200 }];
 
         return [objects, 'Gold'];
-    },
-
-    maxBy4: function () {
-
-        var string = ['This', 'is', 'a', 'simple', 'word', 'in', 'string'];
-        return [string];
     },
 
     mean: function () {
@@ -89,67 +47,47 @@ module.exports = {
     },
 
     meanBy1: function () {
-        var array = [3,2,4,4];
-        return [array];
+        var array = [{ 'name': 'Kate' ,'age': 25 }, { 'name': 'Mark' ,'age': 23 }, { 'name': 'Jack' ,'age': 34 }];
+
+        var fun = function (o) {
+            return o.age;
+        };
+
+        return [array, fun];
     },
-    /*
+
     meanBy2: function () {
-        return [];
-    },
-    */
-    meanBy3: function () {
-        // poprawic
-        var objects = [{ 'n': 4 }, { 'n': 2 }, { 'n': 8 }, { 'n': 6 }];
+        var objects = [{ 'n': 1 }, { 'n': 2 }, { 'n': 3 }, { 'n': 6 }];
 
         return [objects, 'n'];
     },
-
-    meanBy4: function () {
-        return [];
-    },
-
+    
     min: function () {
-        var array = [4,3,6,0,-3,3];
+        var array = [2,5,3,-3,0,9];
         return [array];
     },
 
     minBy1: function () {
 
-        var array = [4,2,5,2,-1,5];
-        return [array];
+        var array = [{ 'name': 'Kate' ,'age': 25 }, { 'name': 'Mark' ,'age': 23 }, { 'name': 'Justin' ,'age': 21 }];
+        var fun = function (o) {
+            return o.age;
+        };
+        
+        return [array, fun];
     },
-    /*
+
     minBy2: function () {
-
-        return [];
-    },
-    */
-
-    minBy3: function () {
         var objects = [{ 'Name': 'Jack', 'Gold': 1500 }, { 'Name': 'Edwin', 'Gold': 2500 }, { 'Name': 'Bob', 'Gold': 200 }];
         return [objects, 'Gold'];
     },
 
-    minBy4: function () {
-        var string = 'qwertyuiop';
-        return [string];
+    multiply: function () {
+        return [-0.5, -30];
     },
 
-    multiply: function (a, b) {
-        return [a ,b];
-    },
-
-    round: function (number, precision) {
-
-        var sqrt = function (number) {
-            if(typeof number !== 'number'){
-                return NaN;
-            }else{
-                return Math.sqrt(number);
-            }
-        };
-
-        return [sqrt, precision];
+    round: function () {
+        return [8.2456, 3];
     },
 
     subtract: function () {
@@ -162,26 +100,18 @@ module.exports = {
     },
 
     sumBy1: function () {
-        var tab = [1,2,3,4];
-        return [tab];
+        var tab = [{'name': 'Jack', 'money': 1100}, {'name': 'Edwin', 'money': 0}, {'name': 'Bill', 'money': 2240.5}];
+        var fun = function (o) {
+            return o.money;
+        };
+        
+        return [tab, fun];
     },
-    /*
+    
     sumBy2: function () {
-        return [];
-    },
-    */
-    sumBy3: function () {
+     var objects = [{'name': 'Jack', 'gold': 25}, {'name': 'Edwin', 'gold': 50}, {'name': 'Bill', 'gold': 85}, {'name': 'Bob', 'gold': 33}];
 
-        var objects = [{ 'gold': 25, 'name': 'Jack'}, { 'gold': 50, 'name': 'Edwin'}, { 'gold': 85 , 'name': 'Bill' }, { 'gold': 33 , 'name': 'Bob' }];
-
-        return [objects, 'gold'];
-    },
-
-    sumBy4: function () {
-
-        var string = 'This is a simple string text';
-        string = string.split(' ');
-
-        return [string];
+     return [objects, 'gold'];
     }
+
 };
