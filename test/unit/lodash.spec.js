@@ -33,7 +33,7 @@ describe('Lodash training Object', function ()
             expect(elem1).to.have.ownProperty('pong');
         });
         it('should check if obj function (ping) return right value', function(){
-            expect(elem1.ping()).to.eql('Number: 5' );
+            expect(elem1.ping()).to.eql('Number: 5');
         });
         it('should check if obj function (pong) return right value', function(){
             expect(elem1.pong()).to.eql('Number: 25');
@@ -57,7 +57,6 @@ describe('Lodash training Object', function ()
     });
 
     describe('assignIn', function () {
-
         var params,
             elem1,
             elem2;
@@ -106,8 +105,6 @@ describe('Lodash training Object', function ()
 
                 expect(elem2 instanceof Array).to.eql(true);
                 expect(params).to.have.length(2);
-            });
-            it('should check values of path', function(){
             });
             it('should check if return array with right value', function(){
                 var rand = function(){
@@ -159,9 +156,25 @@ describe('Lodash training Object', function ()
             elem2;
         beforeEach(function(){
             params = datasets.create();
+            elem1 = params[0];
+            elem2 = params[1];
         });
         it('should check types', function(){
-        
+            expect(elem1).to.eql({}); //prototype
+            expect(elem2 instanceof Object).to.eql(true);
+        });
+        it('should check properties params[1]', function(){
+            expect(elem2).to.have.property('constructor');
+        });
+        it('should chck how create works', function(){
+            var create = _.create.apply(_, params);
+
+            function Siren(){
+                create.Woman.call(this);
+            }
+
+            Siren.prototype = create;
+            expect(Siren).have.property('constructor');
         });
     });
 
@@ -476,9 +489,49 @@ describe('Lodash training Object', function ()
     describe('forIn', function () {
         var params,
             elem1,
-            elem2;
+            elem2,
+            spy,
+            test;
         beforeEach(function(){
             params = datasets.forIn();
+            spy = sinon.spy(params[1]);
+            elem1 = params[0];
+            elem2 = params[1];
+            params[1] = spy;
+            test = params[1];
+        });
+        it('should check types', function(){
+            expect(elem1 instanceof Object).to.eql(true);
+            expect(elem2 instanceof Function).to.eql(true);
+        });
+        it('should check own properties obj', function(){
+            expect(elem1).to.have.ownProperty('arms', 2);
+            expect(elem1).to.have.ownProperty('legs', 2);
+        });
+        it('should check prototype properties obj', function(){
+            expect(elem1).to.have.property('head', 1);
+            expect(elem1).not.to.have.ownProperty('head', 1);
+        });
+        it('should check filter function', function(){
+            test(5);
+            expect(spy).to.have.been.callCount(1);
+        });
+        it.skip('should check properties of returned obj', function(){
+            var forInResults = _.forIn.apply(_, params);
+            expect(forInResults).to.have.property('arms', 4);
+            expect(forInResults).to.have.property('legs', 4);
+            expect(forInResults).to.have.property('head', 1);
+        });
+    });
+
+    describe('forInRight', function () {
+        var params,
+            elem1,
+            elem2,
+            spy,
+            test;
+        beforeEach(function(){
+            params = datasets.forInRight();
             elem1 = params[0];
             elem2 = params[1];
         });
@@ -494,14 +547,8 @@ describe('Lodash training Object', function ()
             expect(elem1).to.have.property('head', 1);
             expect(elem1).not.to.have.ownProperty('head', 1);
         });
-        it('should check properties of returned obj', function(){
-            var forInResults = _.forIn.apply(_, params);
-            expect(forInResults).to.have.property('arms', 2);
-            expect(forInResults).to.have.property('legs', 2);
-            expect(forInResults).to.have.property('head', 1);
-        });
     });
-
+    
     describe('get', function () {
         describe('get1', function () {
             var params;
@@ -763,7 +810,7 @@ describe('Lodash training Object', function ()
         describe('invertBy1', function () {
             var params;
             beforeEach(function(){
-                params = datasets.invert();
+                params = datasets.invertBy1();
             });
             it('should return inverted object', function(){
 
@@ -784,6 +831,34 @@ describe('Lodash training Object', function ()
                 var newObject = obj1;
                 var expected = _.invertBy(newObject);
                 expect(_.invertBy.apply(_, datasets.invertBy1(obj1))).to.eql(expected);
+
+            });
+        });
+        describe('invertBy2', function () {
+            var params;
+            beforeEach(function(){
+                params = datasets.invertBy2();
+            });
+            it('should return inverted object', function(){
+
+                var obj1 = {};
+
+                //function _.times Returns the array. In this case 100 results.
+                _.times(100, function(index){
+                    var indexInside = 0,
+                        counter = 0;
+                    //function _.random Returns the random number between 0 and 20
+                    obj1['key' + indexInside] = _.random(20);
+
+                    if(counter === 10 || counter === 20 || counter === 30 || counter === 40 ||
+                       counter === 50 || counter === 60 || counter === 70 || counter === 80 || counter === 90){
+                        indexInside++;
+                    }
+                    counter++;
+                });
+                var newObject = obj1;
+                var expected = _.invertBy(newObject, params[1]);
+                expect(_.invertBy.apply(_, datasets.invertBy2(obj1))).to.eql(expected);
 
             });
         });
@@ -1097,16 +1172,6 @@ describe('Lodash training Object', function ()
             //    expect(_.omitBy.apply(_, datasets.omitBy1(tallestBuildings, maxValue))).to.eql({'Tokyo Skytree': 634, 'Abraj Al Bait Towers': 601});
             //});
         });
-        describe('omitBy2', function () {
-
-        });
-        describe('omitBy3', function () {
-
-        });
-        describe('omitBy4', function () {
-
-        });
-
     });
     describe('result', function () {
         describe('result1', function () {

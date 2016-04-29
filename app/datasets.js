@@ -63,8 +63,14 @@ module.exports = {
     },
 
     create: function(){
+        function Woman() {
+            this.body = true;
+        }
 
-        return [];
+        function Siren(){
+            Woman.call(this);
+        }
+        return [Woman.prototype, {'constructor': Siren} ];
     },
 
     defaults: function(){
@@ -178,7 +184,8 @@ module.exports = {
 
         Person.prototype.head = 1;
 
-        var fun = function(value, key){
+        var fun = function(value){
+            return value * value;
         };
 
         return [new Person(), fun];
@@ -186,6 +193,18 @@ module.exports = {
 
     forInRight: function(){
 
+        function Person(){
+            this.arms = 2;
+            this.legs = 2;
+        }
+
+        Person.prototype.head = 1;
+
+        var fun = function(value, key, object){
+            return Object[key] = value * value;
+        };
+
+        return [new Person(), fun];
     },
 
     forOwn: function(){
@@ -280,6 +299,15 @@ module.exports = {
         return [obj1];
     },
 
+    invertBy2: function(obj){
+
+        var filter = function(value){
+            return 'chosen' + value;
+        };
+
+        return [obj, filter];
+    },
+
     invoke: function(obj1){
 
         return [obj1];
@@ -318,7 +346,8 @@ module.exports = {
 
     mapKeys1: function(){
 
-        //array
+        //function doesn't make sense
+        // with array like second argument
     },
 
     mapKeys2: function(obj){
@@ -332,12 +361,14 @@ module.exports = {
 
     mapKeys3: function(){
 
-        //object
+        //function doesn't make sense
+        // with object like second argument
     },
 
     mapKeys4: function(){
 
-        //string
+        //function doesn't make sense
+        // with string like second argument
     },
 
 
@@ -406,6 +437,12 @@ module.exports = {
     omitBy1: function(obj, filter){
 
         return [obj, filter];
+    },
+
+    omitBy2: function(obj, filter){
+
+        //function doesn't make sense
+        // with other predicate
     },
 
     result1: function(obj){
