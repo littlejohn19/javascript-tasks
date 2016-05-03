@@ -8,7 +8,6 @@ var Guy = require('./Guy');
 var chance = require('chance').Chance();
 
 
-
 describe('Lodash training Object', function ()
 {
 

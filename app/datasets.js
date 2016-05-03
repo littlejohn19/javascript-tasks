@@ -1,6 +1,5 @@
 'use strict';
 
-
 module.exports = {
 
     assign: function(){
